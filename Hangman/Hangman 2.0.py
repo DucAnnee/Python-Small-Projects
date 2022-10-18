@@ -53,6 +53,7 @@ while True:
                 print('Guessed letters: ',end = '')
                 for letter in answered:
                     print(letter, end = ' ')
+                print('')
             if '_' not in answer:
                 game_state = 2
     if game_state == 0:
