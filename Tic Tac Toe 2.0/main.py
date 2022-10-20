@@ -1,4 +1,5 @@
 import sys
+from turtle import bgcolor
 import pygame 
 import numpy as np
 
@@ -8,6 +9,8 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('TIC TAC TOE')
 screen.fill(BG_COLOUR)
+font = pygame.font.Font(pygame.font.get_default_font(), 100)
+text_surface = font.render('Game draw!', False, (0, 0, 0))
 
 class Board():
     def __init__(self):
@@ -31,12 +34,32 @@ class Game():
         pygame.draw.line(screen, LINE_COLOUR, (0, HEIGHT - square_size), (WIDTH, HEIGHT - square_size),line_size)
     def next_turn(self):
         self.player = self.player % 2 + 1 
-
+    def draw_fig(self, row, col):
+        if self.player == 1:
+            pygame.draw.line(screen, CROSS_COLOUR, (col*square_size + cross_offset, row*square_size + cross_offset),
+                                                  ((col+1)*square_size - cross_offset, (row+1)*square_size - cross_offset), cross_size)
+            pygame.draw.line(screen, CROSS_COLOUR, (col*square_size + cross_offset, (row+1) * square_size - cross_offset), 
+                                                  ((col+1) * square_size - cross_offset, row * square_size + cross_offset), cross_size)
+        if self.player == 2:
+            pygame.draw.circle(screen, CIRC_COLOUR, (col * square_size + cir_offset, row * square_size + cir_offset), cir_radius, cir_size)
+    def draw(self):
+        temp = 0
+        for i in range(len(self.board.squares)):
+            if 0 in self.board.squares[i]:
+                pass
+            else:
+                temp += 1
+        if temp == 3:
+            return True
+        return False
 
 def main():
     game = Game()
     board = game.board
     while True:
+        if game.draw():
+            screen.fill(BG_COLOUR)
+            screen.blit(text_surface, dest=(10,250))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -45,8 +68,10 @@ def main():
                 pos = event.pos
                 col = pos[0] // square_size
                 row = pos[1] // square_size
+                print(row, col)
                 if board.empty_square(row, col):
                     board.mark_square(row, col, game.player)
+                    game.draw_fig(row, col)
                     game.next_turn()
                     print(board.squares)
         pygame.display.update()
