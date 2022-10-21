@@ -29,14 +29,14 @@ class Board():
         return empty_sqrs
     def state(self):
         #VERTICAL
-        for i in range(COLS):
-            if self.squares[0][COLS] == self.squares[1][COLS] == self.squares[2][COLS] != 0:
-                return self.squares[0][COLS]
+        for col in range(COLS):
+            if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] != 0:
+                return self.squares[0][col]
 
         #HORIZONTAL
-        for i in range(ROWS):
-            if self.squares[ROWS][0] == self.squares[ROWS][1] == self.squares[ROWS][2] != 0:
-                return self.squares[ROWS][0]
+        for row in range(ROWS):
+            if self.squares[row][0] == self.squares[row][1] == self.squares[row][2] != 0:
+                return self.squares[row][0]
 
         #DESC DIAGONAL
         if self.squares[0][0] == self.squares[1][1] == self.squares[2][2] != 0:
