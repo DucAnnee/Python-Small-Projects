@@ -33,9 +33,7 @@ class Board():
         return empty_sqrs
     
     def is_full(self):
-        if self.marked_sqrs == 9:
-            return True
-        return False
+        return self.marked_sqrs == 9
     def state(self, show = False):
         #VERTICAL
         for col in range(COLS):
@@ -85,8 +83,10 @@ class AI():
         case = board.state()
         if case == 1:
             return 1, None
-        elif case == 2:
+            
+        if case == 2:
             return -1, None
+
         elif board.is_full():
             return 0, None
 
@@ -190,7 +190,7 @@ def main():
                 if event.key == pygame.K_g:
                     game.change_mode()
                     print(f'changed to {game.gamemode}')
-                if event.key == pygame.K_g:
+                if event.key == pygame.K_r:
                     game.reset()
                     ai = game.ai
                     board = game.board
