@@ -39,30 +39,34 @@ class Board():
         for col in range(COLS):
             if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] != 0:
                 if show:
+                    win_colour = CIRC_COLOUR if self.squares[0][col] == 1 else CROSS_COLOUR
                     start_pos = (col * square_size + square_size // 2, 20)
                     end_pos = (col * square_size + square_size // 2, HEIGHT - 20)
-                    pygame.draw.line(screen, (0,0,0), start_pos, end_pos, line_size)
+                    pygame.draw.line(screen, win_colour, start_pos, end_pos, line_size)
                 return self.squares[0][col]
 
         #HORIZONTAL
         for row in range(ROWS):
             if self.squares[row][0] == self.squares[row][1] == self.squares[row][2] != 0:
                 if show:
+                    win_colour = CIRC_COLOUR if self.squares[0][col] == 1 else CROSS_COLOUR
                     start_pos = (20, row * square_size + square_size // 2)
                     end_pos = (WIDTH - 20, row * square_size + square_size // 2)
-                    pygame.draw.line(screen, (0,0,0), start_pos, end_pos, line_size)
+                    pygame.draw.line(screen, win_colour, start_pos, end_pos, line_size)
                 return self.squares[row][0]
 
         #DESC DIAGONAL
         if self.squares[0][0] == self.squares[1][1] == self.squares[2][2] != 0:
             if show:
-                pygame.draw.line(screen, (0,0,0), (20, 20), (WIDTH - 20, HEIGHT - 20), line_size)
+                win_colour = CIRC_COLOUR if self.squares[0][col] == 1 else CROSS_COLOUR
+                pygame.draw.line(screen, win_colour, (20, 20), (WIDTH - 20, HEIGHT - 20), line_size)
             return self.squares[0][0]
         
         #ASC DIAGONAL
         if self.squares[0][2] == self.squares[1][1] == self.squares[2][0] != 0:
             if show:
-                pygame.draw.line(screen, (0,0,0), (20, HEIGHT - 20), (WIDTH - 20, 20), line_size)
+                win_colour = CIRC_COLOUR if self.squares[0][col] == 1 else CROSS_COLOUR
+                pygame.draw.line(screen, win_colour, (20, HEIGHT - 20), (WIDTH - 20, 20), line_size)
                 
             return self.squares[0][2]
 
