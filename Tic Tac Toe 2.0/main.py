@@ -1,3 +1,5 @@
+from audioop import cross
+from cmath import sqrt
 import random
 import sys
 import pygame 
@@ -166,10 +168,12 @@ class Game():
 
     def draw_fig(self, row, col):
         if self.player == 1:
-            pygame.draw.line(screen, CROSS_COLOUR, (col*square_size + cross_offset, row*square_size + cross_offset),
-                                                  ((col+1)*square_size - cross_offset, (row+1)*square_size - cross_offset), cross_size)
-            pygame.draw.line(screen, CROSS_COLOUR, (col*square_size + cross_offset, (row+1) * square_size - cross_offset), 
-                                                  ((col+1) * square_size - cross_offset, row * square_size + cross_offset), cross_size)
+            start_pos_des = (col * square_size + cross_offset, row * square_size + cross_offset)
+            end_pos_des = ((col +1) * square_size - cross_offset, (row + 1) * square_size - cross_offset)
+            start_pos_asc = (col * square_size + cross_offset, (row + 1) * square_size - cross_offset)
+            end_pos_asc = ((col +1) * square_size - cross_offset, row * square_size + cross_offset)
+            pygame.draw.line(screen, CROSS_COLOUR, start_pos_des, end_pos_des, cross_size)
+            pygame.draw.line(screen, CROSS_COLOUR, start_pos_asc, end_pos_asc, cross_size)
         if self.player == 2:
             pygame.draw.circle(screen, CIRC_COLOUR, (col * square_size + cir_offset, row * square_size + cir_offset), cir_radius, cir_size)
 
