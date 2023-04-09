@@ -1,18 +1,24 @@
-import numpy as np
+import tensorflow as tf
+import matplotlib as plt
 
-inputs = [[1, 2, 3, 2.5],
-          [2.0, 5.0, -1.0, 2.0],
-          [-1.5, 2.7, 3.3, -0.8]]
+mnist = tf.keras.datasets.mnist
 
-weights = [[0.2, 0.8, -0.5, 1.0],
-           [0.5, -0.91, 0.26, -0.5],
-           [-0.26, -0.27, 0.17, 0.87]]
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+ 
+x_train = tf.keras.utils.normalize(x_train, axis = 1)
+x_test = tf.keras.utils.normalize(x_test, axis = 1)
 
-biases = [2, 3, 0.5]
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(128, activation = tf.nn.relu))
+model.add(tf.keras.layers.Dense(128, activation = tf.nn.relu))
+model.add(tf.keras.layers.Dense(10, activation = tf.nn.softmax))
 
-some_value = -0.5
-weight = 0.7
-bias = 0.7
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-output = np.dot(inputs, np.array(weights).T) + biases
-print(output)
+model.fit(x_train, y_train, epochs = 3)
+
+val_loss, val_acc = model.evaluate(x_test, y_test)
+print(val_loss, val_acc)
+
+model.save('number_reader.model')
